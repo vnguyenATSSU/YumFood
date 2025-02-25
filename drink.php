@@ -18,7 +18,7 @@ $result = $conn->query($query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Course - Yummi Food</title>
-    <link rel="stylesheet" href="food-style.css">
+    <link rel="stylesheet" href="./css/food-style.css">
     <style>
         .menu-container {
             display: grid;
@@ -68,6 +68,7 @@ $result = $conn->query($query);
                 </li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Contact</a></li>
+                <li><a href="purchase_history.php">Orders</a></li>
                 <li><a href="cart.php">🛒 Cart</a></li>
             </ul>
         </nav>
@@ -91,22 +92,26 @@ $result = $conn->query($query);
     </section>
 
     <main>
-        <div class="menu-container">
+    <div class="menu-container">
+        <?php if ($result->num_rows > 0): ?>
             <?php while ($row = $result->fetch_assoc()): ?>
                 <div class="menu-item">
                     <img src="<?php echo htmlspecialchars($row['item_photo']); ?>" alt="<?php echo htmlspecialchars($row['item_name']); ?>">
                     <h3><?php echo htmlspecialchars($row['item_name']); ?></h3>
                     <p><?php echo htmlspecialchars($row['item_description']); ?></p>
                     <p class="price">$<?php echo number_format($row['unit_price'], 2); ?></p>
-                    <form action="order_sucess.php" method="post">
+                    
+                    <form action="order_detail.php" method="post">
                         <input type="hidden" name="item_id" value="<?php echo $row['item_id']; ?>">
-                        <input type="hidden" name="category" value="drink.php"> <!-- Add category -->
                         <button type="submit" class="order-button">Order Now</button>
                     </form>
                 </div>
             <?php endwhile; ?>
-        </div>
-    </main>
+        <?php else: ?>
+            <p>No appetizer items available.</p>
+        <?php endif; ?>
+    </div>
+</main>
 
 </body>
 </html>

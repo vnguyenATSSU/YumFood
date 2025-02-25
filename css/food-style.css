@@ -57,7 +57,7 @@ nav {
 }
 
 .nav-center li a:hover {
-    color: #FF6600;
+    color: #F5F5DC;
 }
 
 /* Dropdown Menu */
@@ -105,7 +105,7 @@ nav {
 }
 
 .user-welcome a:hover {
-    color: #FF6600;
+    color: #f1d36f;
 }
 
 .user-welcome .dropdown-content {
@@ -141,20 +141,20 @@ nav {
     font-size: 16px;
     font-weight: bold;
     color: white;
-    background-color: #FF6600;
+    background-color: #f1d36f;
     padding: 10px 20px;
     border-radius: 5px;
     transition: background-color 0.3s;
 }
 
 .sign-in-button:hover {
-    background-color: #e65c00;
+    background-color: #f1d36f;
 }
 
 /* Hero Section (Cool Design Below Nav) */
 .hero {
     text-align: center;
-    background: linear-gradient(to right, #ff9966, #ff5e62);
+    background: linear-gradient(to right, #131111, #9b8282);
     color: white;
     padding: 50px 20px;
 }
@@ -178,7 +178,7 @@ main {
 
 h2 {
     font-size: 2rem;
-    color: #FF6600;
+    color: #F5F5DC;
     margin-bottom: 10px;
 }
 
@@ -215,7 +215,7 @@ h2 {
 
 .menu-item h3 {
     font-size: 1.5rem;
-    color: #FF9966; /* Orange text for contrast */
+    color: #f1d36f; /* Orange text for contrast */
     margin: 10px 0;
 }
 
@@ -231,7 +231,7 @@ h2 {
 
 .menu-item .price {
     font-size: 1.2rem;
-    color: #FF6600;
+    color: #f1d36f;
     font-weight: bold;
     margin: 10px 0;
 }
@@ -239,7 +239,7 @@ h2 {
 /* Cart Styling */
 .cart-icon {
     font-size: 1.5rem;
-    color: #FF6600;
+    color: #f1d36f;
     margin-left: 10px;
 }
 
@@ -259,12 +259,12 @@ th, td {
 }
 
 th {
-    background: #FF6600;
+    background: #f1d36f;
     color: white;
 }
 
 .remove-button {
-    background: red;
+    background: c19960;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -278,7 +278,7 @@ th {
 
 /* Checkout Button */
 .checkout-button {
-    background: #FF6600;
+    background: #f1d36f;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -289,12 +289,12 @@ th {
 }
 
 .checkout-button:hover {
-    background: #e65c00;
+    background: #f1d36f;
 }
 
 /* Order Now Button Styling */
 .order-button {
-    background-color: #FF6600;
+    background-color: #f1d36f;
     color: white;
     font-size: 16px;
     font-weight: bold;
@@ -306,6 +306,34 @@ th {
 }
 
 .order-button:hover {
-    background-color: #e65c00;
+    background-color: #f1d36f;
     transform: scale(1.05);
+}
+
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between buttons and number */
+}
+
+.quantity-controls button {
+    background: transparent; /* Remove button background */
+    border: none; /* Remove border */
+    font-size: 20px; /* Make the symbols larger */
+    cursor: pointer; /* Change cursor on hover */
+    padding: 5px 10px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.quantity-controls button:hover {
+    transform: scale(1.2); /* Slight zoom effect */
+}
+
+.quantity-number {
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 30px;
+    text-align: center;
+    display: inline-block;
 }

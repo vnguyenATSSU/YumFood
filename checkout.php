@@ -2,6 +2,12 @@
 session_start();
 require 'connect.php';
 
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: maincourse.php");
+    exit();
+}
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php?message=Please log in to proceed to checkout.");
     exit();
@@ -28,8 +34,8 @@ $total_price = 0;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout - Yummi Food</title>
-    <link rel="stylesheet" href="food-style.css">
-    <link rel="stylesheet" href="./designcard.css"> <!-- Payment UI styling -->
+    <link rel="stylesheet" href="./css/food-style.css">
+    <link rel="stylesheet" href="designcard.css"> <!-- Payment UI styling -->
 </head>
 <body>
 
@@ -51,9 +57,22 @@ $total_price = 0;
             </li>
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
+            <li><a href="purchase_history.php">Orders</a></li>
             <li><a href="cart.php">🛒 Cart</a></li>
         </ul>
     </nav>
+    <div class="user-welcome">
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <!-- Display Welcome, [Name] dropdown if logged in -->
+            <a href="#" class="login-button">Welcome, <?php echo htmlspecialchars($_SESSION['first_name']); ?> ▼</a>
+            <div class="dropdown-content">
+                <a href="?logout=true">Log Out</a>
+            </div>
+        <?php else: ?>
+            <!-- Display Sign In button if not logged in -->
+            <a href="index.php" class="sign-in-button">Sign In</a>
+        <?php endif; ?>
+    </div>
 </header>
 
 <section class="hero">
@@ -108,15 +127,18 @@ $total_price = 0;
             <div class="flex-row">
                 <div>
                     <label>First Name</label>
-                    <input type="text" name="first_name" placeholder="John" required>
+                    <input type="text" name="first_name" placeholder="" required>
                 </div>
                 <div>
                     <label>Last Name</label>
-                    <input type="text" name="last_name" placeholder="Doe" required>
+                    <input type="text" name="last_name" placeholder="" required>
                 </div>
             </div>
+            <div class="checkout-buttons">
+                <button type="button" class="cancel-button" onclick="window.location.href='cart.php'">Cancel</button>
+                <button type="submit" class="pay-button">Payment</button>
+            </div>
 
-            <button type="submit" class="pay-button">Proceed Payment</button>
         </form>
     </div>
 </main>

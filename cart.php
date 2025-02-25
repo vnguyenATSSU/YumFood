@@ -35,11 +35,30 @@ $total_price = 0;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
-    <link rel="stylesheet" href="food-style.css">
+    <link rel="stylesheet" href="./css/food-style.css">
+    <style>
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .quantity-button {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+        .quantity-button:hover {
+            background: #ddd;
+        }
+    </style>
 </head>
 <body>
 
-    <header> <!-- Fixed the extra `<` issue -->
+    <header>
         <div class="logo">
             <img src="./images/logo.png" alt="Yummi Food Logo">
         </div>
@@ -57,6 +76,7 @@ $total_price = 0;
                 </li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Contact</a></li>
+                <li><a href="purchase_history.php">Orders</a></li> 
                 <li><a href="cart.php">🛒 Cart</a></li>
             </ul>
         </nav>
@@ -96,8 +116,16 @@ $total_price = 0;
                 <tr>
                     <td><?php echo htmlspecialchars($row['item_name']); ?></td>
                     <td>$<?php echo number_format($row['unit_price'], 2); ?></td>
-                    <td><?php echo $row['quantity']; ?></td>
-                    <td>$<?php echo number_format($item_total, 2); ?></td>
+                    <td>
+                        <div class="quantity-controls">
+                            <button class="quantity-button" onclick="updateQuantity(<?php echo $row['item_id']; ?>, -1)">➖</button>
+                            <span id="quantity-<?php echo $row['item_id']; ?>"><?php echo $row['quantity']; ?></span>
+                            <button class="quantity-button" onclick="updateQuantity(<?php echo $row['item_id']; ?>, 1)">➕</button>
+                        </div>
+                    </td>
+                    <td id="total-<?php echo $row['item_id']; ?>" data-price="<?php echo $row['unit_price']; ?>">
+                        $<?php echo number_format($item_total, 2); ?>
+                    </td>
                     <td>
                         <form action="remove_from_cart.php" method="post">
                             <input type="hidden" name="item_id" value="<?php echo $row['item_id']; ?>">
@@ -108,7 +136,7 @@ $total_price = 0;
             <?php endwhile; ?>
         </table>
 
-        <h2>Total: $<?php echo number_format($total_price, 2); ?></h2>
+        <h2>Total: $<span id="grand-total"><?php echo number_format($total_price, 2); ?></span></h2>
 
         <form action="checkout.php" method="post">
             <button type="submit" class="checkout-button">Proceed to Checkout</button>
@@ -116,10 +144,50 @@ $total_price = 0;
     </main>
 
     <script>
+    function updateQuantity(itemId, change) {
+        let quantityElement = document.getElementById("quantity-" + itemId);
+        let totalElement = document.getElementById("total-" + itemId);
+        let grandTotalElement = document.getElementById("grand-total");
+
+        let currentQuantity = parseInt(quantityElement.innerText);
+        let newQuantity = currentQuantity + change;
+
+        if (newQuantity < 1) return;
+
+        // Send the new quantity to update_cart.php
+        fetch("update_cart.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "item_id=" + itemId + "&quantity=" + newQuantity
+        })
+        .then(response => response.text())
+        .then(data => {
+            if (data.trim() === "Success") {
+                // Update the displayed quantity
+                quantityElement.innerText = newQuantity;
+
+                // Update item total price
+                let unitPrice = parseFloat(totalElement.getAttribute("data-price"));
+                let newTotal = (unitPrice * newQuantity).toFixed(2);
+                totalElement.innerText = "$" + newTotal;
+
+                // Recalculate Grand Total
+                let newGrandTotal = 0;
+                document.querySelectorAll("[id^='total-']").forEach(el => {
+                    newGrandTotal += parseFloat(el.innerText.replace("$", ""));
+                });
+
+                grandTotalElement.innerText = newGrandTotal.toFixed(2);
+            } else {
+                alert("Error updating quantity");
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    }
+
+
     function confirmRemove(itemId) {
-        // Show confirmation popup
         if (confirm("Do you want to cancel this item?")) {
-            // If user clicks "Yes", send a request to remove the item
             fetch('remove_from_cart.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -127,14 +195,12 @@ $total_price = 0;
             })
             .then(response => response.text())
             .then(data => {
-                // Reload the page to reflect the changes
                 location.reload();
             })
             .catch(error => console.error('Error:', error));
         }
     }
     </script>
-
 
 </body>
 </html>

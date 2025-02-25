@@ -1,0 +1,106 @@
+/* General Styles for Order History */
+.purchase-history-container {
+    width: 80%;
+    margin: 20px auto;
+    background: #393131;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+/* Order Box */
+.order-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+    flex-wrap: wrap;
+}
+
+.order-header {
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+    color: #f1d36f;
+    margin-bottom: 10px;
+}
+
+/* Order Image */
+.order-body {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.order-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #f1f1f1;
+}
+
+/* Order Info */
+.order-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.order-info h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ebe1e1;
+}
+
+.order-info p {
+    font-size: 14px;
+    color: #ebe1e1;
+}
+
+.buy-again-button {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centers the text */
+    background-color: #f1d36f;
+    color: white;
+    font-size: 13px; 
+    font-weight: bold;
+    padding: 5px 8px; 
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    white-space: nowrap; /* Prevents extra space inside the button */
+    width: auto; /* Ensures it wraps around content */
+    min-width: 80px; /* Ensures it's not too small */
+}
+
+.buy-again-button:hover {
+    background-color: #d4b354;
+}
+
+.buy-again-button img {
+    width: 18px; 
+    height: 18px;
+    margin-left: 5px;
+}
+
+
+/* Responsive */
+@media (max-width: 600px) {
+    .order-box {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .order-body {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

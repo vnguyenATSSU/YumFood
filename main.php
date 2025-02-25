@@ -16,7 +16,7 @@ if (isset($_GET['logout'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yummi Food</title>
-    <link rel="stylesheet" href="food-style.css">
+    <link rel="stylesheet" href="./css/food-style.css">
 </head>
 <body>
 
@@ -39,6 +39,7 @@ if (isset($_GET['logout'])) {
                 </li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Contact</a></li>
+                <li><a href="purchase_history.php">Orders</a></li>
                 <li><a href="cart.php">🛒 Cart</a></li>
             </ul>
         </nav>

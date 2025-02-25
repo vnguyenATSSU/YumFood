@@ -7,15 +7,15 @@ if (!isset($_SESSION['user_id'])) {
 
 require 'connect.php';
 
-date_default_timezone_set("America/New_York"); 
+date_default_timezone_set("America/New_York");
 
-// Ensure item_id is received
 if (!isset($_POST['item_id'])) {
     header("Location: maincourse.php?message=Invalid order.");
     exit();
 }
 
-$item_id = $_POST['item_id'];
+$item_id = $_POST['item_id']; // Use POST instead of GET
+
 
 // Fetch item details
 $query = "SELECT item_name, unit_price FROM menu_item WHERE item_id = ?";
@@ -23,11 +23,15 @@ $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $item_id);
 $stmt->execute();
 $result = $stmt->get_result();
-
-
-
 $item = $result->fetch_assoc();
-$current_datetime = date("Y-m-d H:i:s"); // Get correct date and time
+
+// If item not found, redirect
+if (!$item) {
+    header("Location: main.php?message=Item not found.");
+    exit();
+}
+
+$current_datetime = date("Y-m-d H:i:s");
 ?>
 
 <!DOCTYPE html>
@@ -35,8 +39,8 @@ $current_datetime = date("Y-m-d H:i:s"); // Get correct date and time
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail information</title>
-    <link rel="stylesheet" href="food-style.css">
+    <title>Order Details</title>
+    <link rel="stylesheet" href="./css/food-style.css">
 </head>
 <body>
 
@@ -47,16 +51,36 @@ $current_datetime = date("Y-m-d H:i:s"); // Get correct date and time
     <nav>
         <ul class="nav-center">
             <li><a href="main.php">Home</a></li>
-            <li><a href="maincourse.php">Menu</a></li>
+            <li class="dropdown">
+                <a href="#">Menu ▼</a>
+                <ul class="dropdown-content">
+                    <li><a href="maincourse.php">Main Course</a></li>
+                    <li><a href="appetizer.php">Appetizer</a></li>
+                    <li><a href="dessert.php">Dessert</a></li>
+                    <li><a href="drink.php">Drink</a></li>
+                </ul>
+            </li>
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
+            <li><a href="purchase_history.php">Orders</a></li>
+            <li><a href="cart.php">🛒 Cart</a></li>
         </ul>
     </nav>
+    <div class="user-welcome">
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <a href="#" class="login-button">Welcome, <?php echo htmlspecialchars($_SESSION['first_name']); ?> ▼</a>
+            <div class="dropdown-content">
+                <a href="?logout=true">Log Out</a>
+            </div>
+        <?php else: ?>
+            <a href="index.php" class="sign-in-button">Sign In</a>
+        <?php endif; ?>
+    </div>
 </header>
 
 <section class="hero">
-    <h1></h1>
-    <p></p>
+    <h1>Order Details</h1>
+    <p>Review your order before proceeding.</p>
 </section>
 
 <main>
@@ -75,7 +99,7 @@ $current_datetime = date("Y-m-d H:i:s"); // Get correct date and time
                 <?php endfor; ?>
             </select>
 
-            <button type="submit" class="order-button">Add</button>
+            <button type="submit" class="order-button">Add to Cart</button>
         </form>
     </div>
 </main>
