@@ -2,22 +2,24 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Garamond', sans-serif;
 }
 
 body {
-    background-color: #222; 
+    background-color: #E4DDBB; 
     color: #fff;
     line-height: 1.6;
 }
 
-
+/* Background color under hero section */
 .checkout-container {
+    background-color: #E4DDBB; /* Updated background color */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
     padding: 20px;
+    border-radius: 10px;
 }
 
 .cart-summary {
@@ -91,7 +93,6 @@ body {
     filter: grayscale(30%); 
 }
 
-
 /* Payment Form */
 .payment-box form {
     display: flex;
@@ -113,8 +114,6 @@ body {
     border-radius: 8px;
 }
 
-
-
 .flex-row {
     display: flex;
     gap: 10px;
@@ -134,7 +133,7 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 15px;
+    margin-top: 10px; /* Moved up by reducing margin */
     transition: background-color 0.3s;
 }
 
@@ -142,10 +141,9 @@ body {
     background-color: #f1d36f;
 }
 
-
 .box {
     background-color: white;
-    color: black;
+    color: rgb(241, 20, 20);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
@@ -170,8 +168,13 @@ body {
     justify-content: space-between;
     gap: 10px;
     width: 100%;
-    margin-top: 15px;
+    margin-top: 30px; /* Keep this */
     align-items: center; /* Ensures both buttons align properly */
+    position: relative; /* Needed for precise adjustments */
+}
+
+.checkout-buttons .pay-button {
+    margin-top: 0px; /* Moves only the payment button up */
 }
 
 .checkout-buttons .cancel-button,
@@ -194,6 +197,9 @@ body {
     white-space: nowrap; /* Prevents wrapping */
 }
 
+
+
+
 .checkout-buttons .cancel-button::before {
     content: "←"; /* Left arrow sign */
     font-size: 18px;
@@ -203,4 +209,3 @@ body {
     content: "→"; /* Right arrow sign */
     font-size: 18px;
 }
-

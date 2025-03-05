@@ -32,8 +32,8 @@ if (isset($_POST['signUp'])) {
         die("Email Address Already Exists!");
     }
 
-    // Insert new user
-    $insert_query = "INSERT INTO user (first_name, last_name, email, password) VALUES (?, ?, ?, ?)";
+    // Insert new user (default is_admin = 0)
+    $insert_query = "INSERT INTO user (first_name, last_name, email, password, is_admin) VALUES (?, ?, ?, ?, 0)";
     $stmt = $conn->prepare($insert_query);
     $stmt->bind_param("ssss", $first_name, $last_name, $email, $hashed_password);
 
@@ -67,9 +67,14 @@ if (isset($_POST['signIn'])) {
             $_SESSION['user_id'] = $row['user_id'];
             $_SESSION['first_name'] = $row['first_name'];
             $_SESSION['last_name'] = $row['last_name'];
+            $_SESSION['is_admin'] = $row['is_admin']; // Store admin status
 
-            // Redirect to main.php
-            header("Location: main.php");
+            // Redirect based on admin status
+            if ($row['is_admin'] == 1) {
+                header("Location: admin_dashboard.php"); // Redirect admin
+            } else {
+                header("Location: main.php"); // Redirect normal user
+            }
             exit();
         } else {
             die("Incorrect Password");

@@ -1,14 +1,16 @@
 <?php
 session_start();
 require 'connect.php';
+
+// Handle logout
 if (isset($_GET['logout'])) {
     session_destroy();
-    header("Location: maincourse.php");
+    header("Location: main.php");
     exit();
 }
 
-// Fetch all main course items
-$query = "SELECT * FROM menu_item WHERE item_category = 'main course'";
+// Fetch only Main Course items from the database
+$query = "SELECT * FROM menu_item WHERE item_category = 'Main Course'";
 $result = $conn->query($query);
 ?>
 
@@ -17,45 +19,17 @@ $result = $conn->query($query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Course - Yummi Food</title>
+    <title>Yummi Food - Main Course</title>
     <link rel="stylesheet" href="./css/food-style.css">
-    <style>
-        .menu-container {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr); /* 4 items per row */
-            gap: 20px; /* Space between items */
-            justify-items: center; /* Center items */
-            padding: 20px;
-        }
-        .menu-item {
-            text-align: center;
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 8px;
-            background: #fff;
-            width: 100%;
-            max-width: 250px; /* Prevent items from being too large */
-        }
-        .menu-item img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-        .price {
-            font-weight: bold;
-            color: green;
-        }
-    </style>
+    
 </head>
 <body>
 
-<header>
-        <div class="logo">
-            <img src="./images/logo.png" alt="Yummi Food Logo">
-        </div>
-        <nav>
-            <ul class="nav-center">
+    <!-- Header -->
+    <header>
+        <!-- Left Side Navigation -->
+        <nav class="nav-left">
+            <ul>
                 <li><a href="main.php">Home</a></li>
                 <li class="dropdown">
                     <a href="#">Menu ▼</a>
@@ -66,31 +40,42 @@ $result = $conn->query($query);
                         <li><a href="drink.php">Drink</a></li>
                     </ul>
                 </li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="cart.php">🛒 Cart</a></li>
+                <li><a href="aboutus.php">About us</a></li>
             </ul>
         </nav>
-        <div class="user-welcome">
-            <?php if (isset($_SESSION['user_id'])): ?>
-                <!-- Display Welcome, [Name] dropdown if logged in -->
-                <a href="#" class="login-button">Welcome, <?php echo htmlspecialchars($_SESSION['first_name']); ?> ▼</a>
-                <div class="dropdown-content">
-                    <a href="?logout=true">Log Out</a>
-                </div>
-            <?php else: ?>
-                <!-- Display Sign In button if not logged in -->
-                <a href="index.php" class="sign-in-button">Sign In</a>
-            <?php endif; ?>
+
+        <!-- Center Logo -->
+        <div class="logo">
+            <a href="aboutus.php">
+                <img src="./images/logo1.png" alt="Yummi Food Logo">
+            </a>
         </div>
+
+        <!-- Right Side Navigation -->
+        <nav class="nav-right">
+            <ul>
+                <li><a href="purchase_history.php">Orders</a></li>
+                <li><a href="cart.php">🛒 Cart</a></li>
+            </ul>
+            <div class="user-welcome">
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <a href="#" class="login-button">Welcome, <?php echo htmlspecialchars($_SESSION['first_name']); ?> ▼</a>
+                    <div class="dropdown-content">
+                        <a href="?logout=true">Log Out</a>
+                    </div>
+                <?php else: ?>
+                    <a href="index.php" class="sign-in-button">Sign In</a>
+                <?php endif; ?>
+            </div>
+        </nav>
     </header>
 
-    <section class="hero">
-        <h1>Main Course</h1>
-        <p>Explore our delicious main course dishes!</p>
-    </section>
+<section class="hero">
+    <h1>Main Course</h1>
+    <p>Explore our delicious main course dishes!</p>
+</section>
 
-    <main>
+<main>
     <div class="menu-container">
         <?php if ($result->num_rows > 0): ?>
             <?php while ($row = $result->fetch_assoc()): ?>
@@ -107,7 +92,7 @@ $result = $conn->query($query);
                 </div>
             <?php endwhile; ?>
         <?php else: ?>
-            <p>No appetizer items available.</p>
+            <p>No dessert items available.</p>
         <?php endif; ?>
     </div>
 </main>

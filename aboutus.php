@@ -1,15 +1,5 @@
 <?php
 session_start();
-require 'connect.php';
-if (isset($_GET['logout'])) {
-    session_destroy();
-    header("Location: drink.php");
-    exit();
-}
-
-// Fetch all main course items
-$query = "SELECT * FROM menu_item WHERE item_category = 'drink'";
-$result = $conn->query($query);
 ?>
 
 <!DOCTYPE html>
@@ -17,12 +7,12 @@ $result = $conn->query($query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Course - Yummi Food</title>
+    <title>About Us - Yummi Food</title>
     <link rel="stylesheet" href="./css/food-style.css">
 </head>
 <body>
-
-<!-- Header -->
+    
+    <!-- Header -->
     <header>
         <!-- Left Side Navigation -->
         <nav class="nav-left">
@@ -68,31 +58,18 @@ $result = $conn->query($query);
     </header>
 
 <section class="hero">
-    <h1>Drink</h1>
-    <p>Explore our delicious Drink menu!</p>
+    <h1>About us</h1>
+    <p></p>
 </section>
 
-<main>
-    <div class="menu-container">
-        <?php if ($result->num_rows > 0): ?>
-            <?php while ($row = $result->fetch_assoc()): ?>
-                <div class="menu-item">
-                    <img src="<?php echo htmlspecialchars($row['item_photo']); ?>" alt="<?php echo htmlspecialchars($row['item_name']); ?>">
-                    <h3><?php echo htmlspecialchars($row['item_name']); ?></h3>
-                    <p><?php echo htmlspecialchars($row['item_description']); ?></p>
-                    <p class="price">$<?php echo number_format($row['unit_price'], 2); ?></p>
-                    
-                    <form action="order_detail.php" method="post">
-                        <input type="hidden" name="item_id" value="<?php echo $row['item_id']; ?>">
-                        <button type="submit" class="order-button">Order Now</button>
-                    </form>
-                </div>
-            <?php endwhile; ?>
-        <?php else: ?>
-            <p>No drink items available.</p>
-        <?php endif; ?>
-    </div>
-</main>
+    <!-- About Us Section -->
+    <main>
+        <section class="about-section">
+            
+            <p>Welcome to Yummi Food, where every meal is homemade with love! Inspired by my mom’s cooking, we bring you delicious, fresh, and comforting dishes straight from our kitchen.</p> 
+            <p>Food is more than just a meal—it’s warmth, family, and tradition. We’re excited to share our home-cooked flavors with you. Enjoy!</p>
+        </section>
+    </main>
 
 </body>
 </html>

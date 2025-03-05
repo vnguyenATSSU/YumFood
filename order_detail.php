@@ -14,11 +14,10 @@ if (!isset($_POST['item_id'])) {
     exit();
 }
 
-$item_id = $_POST['item_id']; // Use POST instead of GET
-
+$item_id = $_POST['item_id'];
 
 // Fetch item details
-$query = "SELECT item_name, unit_price FROM menu_item WHERE item_id = ?";
+$query = "SELECT item_name, unit_price, item_photo FROM menu_item WHERE item_id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $item_id);
 $stmt->execute();
@@ -44,65 +43,82 @@ $current_datetime = date("Y-m-d H:i:s");
 </head>
 <body>
 
-<header>
-    <div class="logo">
-        <img src="./images/logo.png" alt="Yummi Food Logo">
-    </div>
-    <nav>
-        <ul class="nav-center">
-            <li><a href="main.php">Home</a></li>
-            <li class="dropdown">
-                <a href="#">Menu ▼</a>
-                <ul class="dropdown-content">
-                    <li><a href="maincourse.php">Main Course</a></li>
-                    <li><a href="appetizer.php">Appetizer</a></li>
-                    <li><a href="dessert.php">Dessert</a></li>
-                    <li><a href="drink.php">Drink</a></li>
-                </ul>
-            </li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="purchase_history.php">Orders</a></li>
-            <li><a href="cart.php">🛒 Cart</a></li>
-        </ul>
-    </nav>
-    <div class="user-welcome">
-        <?php if (isset($_SESSION['user_id'])): ?>
-            <a href="#" class="login-button">Welcome, <?php echo htmlspecialchars($_SESSION['first_name']); ?> ▼</a>
-            <div class="dropdown-content">
-                <a href="?logout=true">Log Out</a>
+    <header>
+        <!-- Left Side Navigation -->
+        <nav class="nav-left">
+            <ul>
+                <li><a href="main.php">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Menu ▼</a>
+                    <ul class="dropdown-content">
+                        <li><a href="maincourse.php">Main Course</a></li>
+                        <li><a href="appetizer.php">Appetizer</a></li>
+                        <li><a href="dessert.php">Dessert</a></li>
+                        <li><a href="drink.php">Drink</a></li>
+                    </ul>
+                </li>
+                <li><a href="aboutus.php">About us</a></li>
+            </ul>
+        </nav>
+
+        <!-- Center Logo -->
+        <div class="logo">
+            <a href="aboutus.php">
+                <img src="./images/logo1.png" alt="Yummi Food Logo">
+            </a>
+        </div>
+
+        <!-- Right Side Navigation -->
+        <nav class="nav-right">
+            <ul>
+                <li><a href="purchase_history.php">Orders</a></li>
+                <li><a href="cart.php">🛒 Cart</a></li>
+            </ul>
+            <div class="user-welcome">
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <a href="#" class="login-button">Welcome, <?php echo htmlspecialchars($_SESSION['first_name']); ?> ▼</a>
+                    <div class="dropdown-content">
+                        <a href="?logout=true">Log Out</a>
+                    </div>
+                <?php else: ?>
+                    <a href="index.php" class="sign-in-button">Sign In</a>
+                <?php endif; ?>
             </div>
-        <?php else: ?>
-            <a href="index.php" class="sign-in-button">Sign In</a>
-        <?php endif; ?>
-    </div>
-</header>
+        </nav>
+    </header>
 
-<section class="hero">
-    <h1>Order Details</h1>
-    <p>Review your order before proceeding.</p>
-</section>
+    <section class="hero">
+        <h1>Order Details</h1>
+        <p>Review your order before proceeding.</p>
+    </section>
 
-<main>
-    <div class="order-container">
-        <h2><?php echo htmlspecialchars($item['item_name']); ?></h2>
-        <p>Price: $<?php echo number_format($item['unit_price'], 2); ?></p>
-        <p>Order Date & Time: <?php echo $current_datetime; ?></p>
+    <main>
+        <div class="order-detail-container">
+            <div class="order-image">
+                <img src="<?php echo htmlspecialchars($item['item_photo']); ?>" alt="<?php echo htmlspecialchars($item['item_name']); ?>">
+            </div>
+            <div class="order-info">
+                <h2><?php echo htmlspecialchars($item['item_name']); ?></h2>
+                <p class="price">Price: $<?php echo number_format($item['unit_price'], 2); ?></p>
+                <p class="order-time">Order Date & Time: <?php echo $current_datetime; ?></p>
 
-        <form action="process_order.php" method="post">
-            <input type="hidden" name="item_id" value="<?php echo $item_id; ?>">
-            
-            <label for="quantity">Quantity:</label>
-            <select name="quantity" id="quantity">
-                <?php for ($i = 1; $i <= 10; $i++): ?>
-                    <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                <?php endfor; ?>
-            </select>
+                <form action="process_order.php" method="post">
+                    <input type="hidden" name="item_id" value="<?php echo $item_id; ?>">
+                    
+                    <div class="form-group">
+                        <label for="quantity">Quantity:</label>
+                        <select name="quantity" id="quantity">
+                            <?php for ($i = 1; $i <= 10; $i++): ?>
+                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                            <?php endfor; ?>
+                        </select>
+                    </div>
 
-            <button type="submit" class="order-button">Add to Cart</button>
-        </form>
-    </div>
-</main>
+                    <button type="submit" class="order-button">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </main>
 
 </body>
 </html>
