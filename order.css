@@ -24,7 +24,7 @@
     text-align: left;
     font-size: 16px;
     font-weight: bold;
-    color: #f1d36f;
+    color: black;
     margin-bottom: 10px;
 }
 
@@ -54,18 +54,18 @@
 .order-info h3 {
     font-size: 18px;
     font-weight: bold;
-    color: #ebe1e1;
+    color: black;
 }
 
 .order-info p {
     font-size: 14px;
-    color: #ebe1e1;
+    color: black;
 }
 
 .buy-again-button {
     display: flex;
     align-items: center;
-    justify-content: center; /* Centers the text */
+    justify-content: center; 
     background-color: #f1d36f;
     color: white;
     font-size: 13px; 
@@ -76,9 +76,9 @@
     cursor: pointer;
     text-decoration: none;
     transition: background-color 0.3s;
-    white-space: nowrap; /* Prevents extra space inside the button */
-    width: auto; /* Ensures it wraps around content */
-    min-width: 80px; /* Ensures it's not too small */
+    white-space: nowrap; 
+    width: auto; 
+    min-width: 80px; 
 }
 
 .buy-again-button:hover {

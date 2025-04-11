@@ -48,7 +48,7 @@ if ($result->num_rows > 0) {
     $stmt->bind_param("iii", $new_quantity, $user_id, $item_id);
 } else {
     // Insert new item into the cart
-    $stmt->close(); // Close previous statement before reusing
+    $stmt->close(); 
     
     $insert_query = "INSERT INTO cart (user_id, item_id, quantity) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($insert_query);
@@ -64,7 +64,6 @@ if (!$stmt->execute()) {
 }
 $stmt->close();
 
-// Redirect to cart.php with success message
 header("Location: cart.php?message=Item added to cart successfully");
 exit();
 ?>

@@ -10,7 +10,7 @@ if (isset($_GET['logout'])) {
 
 // Check if user is logged in and is an admin
 if (!isset($_SESSION['user_id']) || $_SESSION['is_admin'] != 1) {
-    header("Location: main.php"); // Redirect non-admin users
+    header("Location: main.php"); 
     exit();
 }
 
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("sssds", $item_name, $item_description, $item_category, $unit_price, $image_path);
 
         if ($stmt->execute()) {
-            echo "<script>alert('Food item added successfully!'); window.location='admin_dashboard.php';</script>";
+            echo "<script>alert('Food item added successfully!'); window.location='admin_modify.php';</script>";
         } else {
             echo "Error: " . $stmt->error;
         }
@@ -65,12 +65,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <header>
     <nav class="nav-left">
         <ul>
-            <li><a href="add_food.php">Add food</a></li>
+            <li><a href="admin_modify.php">Edit Food</a></li>
+            <li><a href="add_food.php">Add Food</a></li>
+            <li><a href="delete_food.php">Delete Food</a></li>
         </ul>
     </nav>
 
     <div class="logo">
-        <a href="aboutus.php">
+        <a href="admin_modify.php">
             <img src="./images/logo1.png" alt="Yummi Food Logo">
         </a>
     </div>
@@ -106,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="Appetizer">Appetizer</option>
             <option value="Main Course">Main Course</option>
             <option value="Dessert">Dessert</option>
-            <option value="Beverage">Beverage</option>
+            <option value="Drink">Drink</option>
         </select>
 
         <label for="unit_price">Price:</label>

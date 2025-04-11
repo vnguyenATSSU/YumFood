@@ -25,9 +25,7 @@ $result = $conn->query($query);
 </head>
 <body>
 
-    <!-- Header -->
     <header>
-        <!-- Left Side Navigation -->
         <nav class="nav-left">
             <ul>
                 <li><a href="main.php">Home</a></li>
@@ -44,14 +42,12 @@ $result = $conn->query($query);
             </ul>
         </nav>
 
-        <!-- Center Logo -->
         <div class="logo">
             <a href="aboutus.php">
                 <img src="./images/logo1.png" alt="Yummi Food Logo">
             </a>
         </div>
 
-        <!-- Right Side Navigation -->
         <nav class="nav-right">
             <ul>
                 <li><a href="purchase_history.php">Orders</a></li>

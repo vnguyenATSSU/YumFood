@@ -1,13 +1,15 @@
 <?php
 session_start();
 require 'connect.php';
+
+// Handle logout
 if (isset($_GET['logout'])) {
     session_destroy();
     header("Location: drink.php");
     exit();
 }
 
-// Fetch all main course items
+// Fetch all drink items
 $query = "SELECT * FROM menu_item WHERE item_category = 'drink'";
 $result = $conn->query($query);
 ?>
@@ -17,14 +19,11 @@ $result = $conn->query($query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Course - Yummi Food</title>
+    <title>Drinks - Yummi Food</title>
     <link rel="stylesheet" href="./css/food-style.css">
 </head>
 <body>
-
-<!-- Header -->
-    <header>
-        <!-- Left Side Navigation -->
+<header>
         <nav class="nav-left">
             <ul>
                 <li><a href="main.php">Home</a></li>
@@ -41,14 +40,12 @@ $result = $conn->query($query);
             </ul>
         </nav>
 
-        <!-- Center Logo -->
         <div class="logo">
             <a href="aboutus.php">
                 <img src="./images/logo1.png" alt="Yummi Food Logo">
             </a>
         </div>
 
-        <!-- Right Side Navigation -->
         <nav class="nav-right">
             <ul>
                 <li><a href="purchase_history.php">Orders</a></li>
@@ -68,8 +65,8 @@ $result = $conn->query($query);
     </header>
 
 <section class="hero">
-    <h1>Drink</h1>
-    <p>Explore our delicious Drink menu!</p>
+    <h1>Drinks</h1>
+    <p>Quench your thirst with our refreshing drinks!</p>
 </section>
 
 <main>

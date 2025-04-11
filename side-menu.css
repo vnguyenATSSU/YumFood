@@ -1,0 +1,45 @@
+/* Side Menu Styles */
+.side-menu {
+    width: 20%;
+    padding: 20px;
+    font-family: 'Arial', sans-serif; /* Use Arial or a similar clean font */
+    background-color: #f8f8f8; /* Light gray background */
+    border-right: 1px solid #ddd; /* Subtle right border */
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.05); /* Soft shadow */
+}
+
+.side-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0; /* Remove default ul margins */
+}
+
+.side-menu li {
+    margin-bottom: 12px; /* Slightly more spacing */
+}
+
+.side-menu a {
+    display: block;
+    padding: 10px 15px; /* Increased padding */
+    text-decoration: none;
+    color: #444; /* Darker text color */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+    text-align: left;
+    border-radius: 6px; /* Rounded corners */
+    background-color: transparent; /* Default transparent background */
+}
+
+.side-menu a:hover {
+    color: #fff; /* White text on hover */
+    background-color: #ff9800; /* Orange hover background */
+}
+
+/* Layout Styles */
+.container {
+    display: flex;
+    min-height: calc(100vh - 110px);
+}
+
+.hero-container {
+    width: 80%;
+}

@@ -1,26 +1,46 @@
 /* ===== GENERAL STYLES ===== */
+
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: 'Garamond', sans-serif;
 }
 
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Garamond', sans-serif;
     line-height: 1.6;
-    background: #E4DDBB;
+    background: white;
     color: #333;
+}
+
+header {
+    border-bottom: 2px solid black;
 }
 
 /* ===== ANIMATIONS ===== */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes slideDown {
-    from { transform: translateY(-10px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 /* ===== HEADER & NAVIGATION ===== */
@@ -28,7 +48,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: white;
+    background: #FBFEFD;
     padding: 15px 30px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -90,7 +110,6 @@ nav a:hover {
     color: #ff9800;
 }
 
-/* Left Navigation */
 .nav-left {
     position: relative;
     z-index: 1000;
@@ -115,7 +134,6 @@ nav a:hover {
     display: block;
 }
 
-/* Right Navigation */
 .nav-right {
     display: flex;
     align-items: center;
@@ -152,11 +170,10 @@ nav a:hover {
     background: #f8f8f8;
 }
 
-/* ===== HERO SECTION ===== */
 .hero {
     text-align: center;
     padding: 80px 20px;
-    background: linear-gradient(to bottom, white, #E4DDBB);
+    background: linear-gradient(to bottom, #FBFEFD, white);
 }
 
 .hero h1 {
@@ -171,7 +188,6 @@ nav a:hover {
     animation: fadeIn 0.8s ease-out 0.4s backwards;
 }
 
-/* ===== MENU ITEMS ===== */
 .menu-container,
 .menu {
     display: grid;
@@ -221,7 +237,7 @@ nav a:hover {
     object-fit: cover;
 }
 
-.menu-item h3, 
+.menu-item h3,
 .menu-item p {
     padding: 10px 15px;
     margin: 0;
@@ -238,7 +254,6 @@ nav a:hover {
     margin-top: auto;
 }
 
-/* ===== BUTTONS ===== */
 .order-button {
     width: 100%;
     padding: 10px;
@@ -268,8 +283,8 @@ nav a:hover {
     background-color: #e68900;
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 1200px) {
+
     .menu-container,
     .menu {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -299,6 +314,7 @@ nav a:hover {
 }
 
 @media (max-width: 480px) {
+
     .menu-container,
     .menu {
         grid-template-columns: 1fr;
@@ -311,14 +327,12 @@ nav a:hover {
     }
 }
 
-/* ===== ACCESSIBILITY ===== */
 @media (prefers-reduced-motion: reduce) {
     * {
         animation: none !important;
         transition: none !important;
     }
 }
-
 
 .order-detail-container {
     display: flex;
@@ -408,3 +422,5 @@ nav a:hover {
         max-width: 100%;
     }
 }
+
+
