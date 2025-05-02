@@ -4,7 +4,7 @@ require 'connect.php';
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php");
+    header("Location: signup.php");
     exit();
 }
 
@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->execute()) {
                 $_SESSION['first_name'] = $first_name;
                 $_SESSION['last_name'] = $last_name;
-                header("Location: main.php");
+                header("Location: index.php");
                 exit();
             } else {
                 $error_message = "Error updating profile: " . $conn->error;

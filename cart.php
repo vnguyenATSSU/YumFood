@@ -4,19 +4,17 @@ require 'connect.php';
 
 if (isset($_GET['logout'])) {
     session_destroy();
-    header("Location: main.php");
+    header("Location: index.php");
     exit();
 }
 
-// Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php?message=Please log in to view your cart.");
+    header("Location: signup.php?message=Please log in to view your cart.");
     exit();
 }
 
 $user_id = $_SESSION['user_id'];
 
-// Fetch cart items for the logged-in user
 $query = "SELECT cart.item_id, menu_item.item_name, menu_item.unit_price, menu_item.item_photo, cart.quantity 
           FROM cart 
           JOIN menu_item ON cart.item_id = menu_item.item_id 
@@ -37,13 +35,14 @@ $total_price = 0;
     <title>Shopping Cart</title>
     <link rel="stylesheet" href="./css/food-style.css">
     <link rel="stylesheet" href="./css/cart-style.css">
+    <link rel="stylesheet" href="popup.css">
 </head>
 <body>
 
 <header>
     <nav class="nav-left">
         <ul>
-            <li><a href="main.php">Home</a></li>
+            <li><a href="index.php">Home</a></li>
             <li class="dropdown">
                 <a href="#">Menu ▼</a>
                 <ul class="dropdown-content">
@@ -75,7 +74,7 @@ $total_price = 0;
                     <a href="?logout=true">Log Out</a>
                 </div>
             <?php else: ?>
-                <a href="index.php" class="sign-in-button">Sign In</a>
+                <a href="signup.php" class="sign-in-button">Sign In</a>
             <?php endif; ?>
         </div>
     </nav>
@@ -144,12 +143,21 @@ $total_price = 0;
         <div class="back-to-menu">
             <a href="maincourse.php" class="back-button">Back to Menu</a>
         </div>
-
     <?php endif; ?>
 </main>
 
+<!-- Custom Modal -->
+<div id="confirmModal" class="modal">
+    <div class="modal-content">
+        <p>Are you sure you want to remove this item from your cart?</p>
+        <div class="modal-buttons">
+            <button id="confirmYes" class="modal-btn confirm">Yes</button>
+            <button id="confirmNo" class="modal-btn cancel">No</button>
+        </div>
+    </div>
+</div>
+
 <script>
-// Update quantity and total price 
 function updateQuantity(itemId, change) {
     let quantityElement = document.getElementById("quantity-" + itemId);
     let totalElement = document.getElementById("total-" + itemId);
@@ -183,18 +191,29 @@ function updateQuantity(itemId, change) {
     });
 }
 
-// Confirm removal of an item
+let currentItemToRemove = null;
+
 function confirmRemove(itemId) {
-    if (confirm("Are you sure you want to remove this item from your cart?")) {
+    currentItemToRemove = itemId;
+    document.getElementById('confirmModal').style.display = 'block';
+}
+
+document.getElementById('confirmYes').addEventListener('click', function () {
+    if (currentItemToRemove !== null) {
         fetch("remove_from_cart.php", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: "item_id=" + itemId
+            body: "item_id=" + currentItemToRemove
         })
         .then(() => location.reload())
         .catch(error => console.error('Error:', error));
     }
-}
+    document.getElementById('confirmModal').style.display = 'none';
+});
+
+document.getElementById('confirmNo').addEventListener('click', function () {
+    document.getElementById('confirmModal').style.display = 'none';
+});
 </script>
 
 </body>

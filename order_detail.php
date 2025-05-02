@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php?message=Please log in before making an order.");
+    header("Location: signup.php?message=Please log in before making an order.");
     exit();
 }
 
@@ -26,7 +26,7 @@ $item = $result->fetch_assoc();
 
 // If item not found, redirect
 if (!$item) {
-    header("Location: main.php?message=Item not found.");
+    header("Location: index.php?message=Item not found.");
     exit();
 }
 
@@ -46,7 +46,7 @@ $current_datetime = date("Y-m-d H:i:s");
     <header>
         <nav class="nav-left">
             <ul>
-                <li><a href="main.php">Home</a></li>
+                <li><a href="index.php">Home</a></li>
                 <li class="dropdown">
                     <a href="#">Menu ▼</a>
                     <ul class="dropdown-content">
@@ -78,7 +78,7 @@ $current_datetime = date("Y-m-d H:i:s");
                         <a href="?logout=true">Log Out</a>
                     </div>
                 <?php else: ?>
-                    <a href="index.php" class="sign-in-button">Sign In</a>
+                    <a href="signup.php" class="sign-in-button">Sign In</a>
                 <?php endif; ?>
             </div>
         </nav>

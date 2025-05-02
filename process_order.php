@@ -4,7 +4,7 @@ require 'connect.php';
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php?message=Please log in before making an order.");
+    header("Location: signup.php?message=Please log in before making an order.");
     exit();
 }
 

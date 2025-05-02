@@ -4,16 +4,17 @@ require 'connect.php';
 
 // Check if user is logged in and is an admin
 if (!isset($_SESSION['user_id']) || $_SESSION['is_admin'] != 1) {
-    header("Location: main.php"); 
+    header("Location: index.php"); 
     exit();
 }
+
+$showSuccessModal = false;
 
 // Handle delete request
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['item_id'])) {
     $item_id = filter_input(INPUT_POST, 'item_id', FILTER_VALIDATE_INT);
 
     if ($item_id !== false) {
-        
         $sql = "DELETE FROM menu_item WHERE item_id = ?";
 
         $stmt = $conn->prepare($sql);
@@ -21,10 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['item_id'])) {
         if ($stmt) {
             $stmt->bind_param("i", $item_id);
             if ($stmt->execute()) {
-                echo "<script>
-                        alert('Food item deleted successfully.');
-                        window.location.href='delete_food.php';
-                      </script>";
+                $showSuccessModal = true; // Trigger success modal
             } else {
                 echo "<script>
                         alert('Error deleting food item: " . $conn->error . "');
@@ -46,7 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['item_id'])) {
     }
 }
 
-// Fetch all menu items to display
 $sql = "SELECT item_id, item_name, item_photo FROM menu_item";
 $result = $conn->query($sql);
 ?>
@@ -58,6 +55,7 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delete Food Item</title>
     <link rel="stylesheet" href="./css/food-style.css">
+    <link rel="stylesheet" href="popup.css">
     <style>
         .menu-container {
             display: flex;
@@ -109,7 +107,7 @@ $result = $conn->query($sql);
                         <a href="?logout=true">Log Out</a>
                     </div>
                 <?php else: ?>
-                    <a href="index.php" class="sign-in-button">Sign In</a>
+                    <a href="signup.php" class="sign-in-button">Sign In</a>
                 <?php endif; ?>
             </div>
         </nav>
@@ -126,7 +124,7 @@ $result = $conn->query($sql);
                 echo '<div class="menu-item">';
                 echo '<h3>'.htmlspecialchars($row["item_name"]).'</h3>';
                 echo '<img src="'.htmlspecialchars($row["item_photo"]).'" alt="'.htmlspecialchars($row["item_name"]).'">';
-                echo '<form class="delete-form" method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '">';
+                echo '<form class="delete-form" method="post" onsubmit="return confirmDelete(this)">';
                 echo '<input type="hidden" name="item_id" value="'.htmlspecialchars($row["item_id"]).'">';
                 echo '<button type="submit" class="order-button">Delete</button>';
                 echo '</form>';
@@ -138,5 +136,58 @@ $result = $conn->query($sql);
         ?>
     </div>
 
+    <!-- Confirm Delete Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <h2>Are you sure you want to delete this food item?</h2>
+            <div class="modal-buttons">
+                <button class="modal-btn confirm" id="confirmYes">Yes</button>
+                <button class="modal-btn cancel" onclick="closeModal('confirmModal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <h2>Food Item Deleted Successfully</h2>
+            <div class="modal-buttons">
+                <button class="modal-btn confirm" onclick="window.location.href='delete_food.php'">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let pendingForm = null;
+
+        function confirmDelete(form) {
+            pendingForm = form;
+            document.getElementById('confirmModal').style.display = 'block';
+            return false; // Stop the form from submitting immediately
+        }
+
+        document.getElementById('confirmYes').onclick = function() {
+            if (pendingForm) pendingForm.submit();
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        // Show success modal if triggered by PHP
+        <?php if ($showSuccessModal): ?>
+        window.onload = function() {
+            document.getElementById('successModal').style.display = 'block';
+        }
+        <?php endif; ?>
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const confirmModal = document.getElementById('confirmModal');
+            const successModal = document.getElementById('successModal');
+            if (event.target === confirmModal) confirmModal.style.display = "none";
+            if (event.target === successModal) successModal.style.display = "none";
+        }
+    </script>
 </body>
 </html>

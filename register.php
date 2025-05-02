@@ -18,13 +18,13 @@ if (isset($_POST['signUp'])) {
     // Validate inputs
     if (empty($first_name) || empty($last_name) || empty($email) || empty($password)) {
         $_SESSION['error'] = "All fields are required.";
-        header("Location: index.php"); // Redirect back to index.php
+        header("Location: signup.php"); // Redirect back to signup.php
         exit();
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $_SESSION['error'] = "Invalid email format.";
-        header("Location: index.php");
+        header("Location: signup.php");
         exit();
     }
 
@@ -40,7 +40,7 @@ if (isset($_POST['signUp'])) {
 
     if ($result->num_rows > 0) {
         $_SESSION['error'] = "Email Address Already Exists!";
-        header("Location: index.php");
+        header("Location: signup.php");
         exit();
     }
 
@@ -51,11 +51,11 @@ if (isset($_POST['signUp'])) {
 
     if ($stmt->execute()) {
         $_SESSION['success'] = "Registration Successful! Redirecting to login page...";
-        header("Location: index.php");
+        header("Location: signup.php");
         exit();
     } else {
         $_SESSION['error'] = "Registration error: " . $stmt->error;
-        header("Location: index.php");
+        header("Location: signup.php");
         exit();
     }
 }
@@ -85,17 +85,17 @@ if (isset($_POST['signIn'])) {
             if ($row['is_admin'] == 1) {
                 header("Location: admin_modify.php"); // Redirect admin
             } else {
-                header("Location: main.php"); // Redirect normal user
+                header("Location: index.php"); // Redirect normal user
             }
             exit();
         } else {
             $_SESSION['error'] = "Incorrect Password";
-            header("Location: index.php");
+            header("Location: signup.php");
             exit();
         }
     } else {
         $_SESSION['error'] = "Email not found.";
-        header("Location: index.php");
+        header("Location: signup.php");
         exit();
     }
 }

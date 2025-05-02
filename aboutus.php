@@ -14,7 +14,7 @@ session_start();
     <header>
         <nav class="nav-left">
             <ul>
-                <li><a href="main.php">Home</a></li>
+                <li><a href="index.php">Home</a></li>
                 <li class="dropdown">
                     <a href="#">Menu ▼</a>
                     <ul class="dropdown-content">
@@ -46,7 +46,7 @@ session_start();
                         <a href="?logout=true">Log Out</a>
                     </div>
                 <?php else: ?>
-                    <a href="index.php" class="sign-in-button">Sign In</a>
+                    <a href="signup.php" class="sign-in-button">Sign In</a>
                 <?php endif; ?>
             </div>
         </nav>
