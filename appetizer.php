@@ -23,9 +23,7 @@ $result = $conn->query($query);
     <link rel="stylesheet" href="./css/food-style.css">
 </head>
 <body>
-<?php if (isset($_SESSION['user_id'])): ?>
-    <p>Welcome, <?php echo htmlspecialchars($_SESSION['first_name']); ?>!</p>
-<?php endif; ?>
+
     <header>
         <nav class="nav-left">
             <ul>
@@ -58,6 +56,7 @@ $result = $conn->query($query);
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <a href="#" class="login-button">Welcome, <?php echo htmlspecialchars($_SESSION['first_name']); ?> ▼</a>
                     <div class="dropdown-content">
+                        <a href="edit_profile.php">Edit Profile</a>
                         <a href="?logout=true">Log Out</a>
                     </div>
                 <?php else: ?>

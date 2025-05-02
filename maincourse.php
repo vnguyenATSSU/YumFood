@@ -57,6 +57,7 @@ $result = $conn->query($query);
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <a href="#" class="login-button">Welcome, <?php echo htmlspecialchars($_SESSION['first_name']); ?> ▼</a>
                     <div class="dropdown-content">
+                        <a href="edit_profile.php">Edit Profile</a>
                         <a href="?logout=true">Log Out</a>
                     </div>
                 <?php else: ?>

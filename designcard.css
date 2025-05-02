@@ -13,7 +13,7 @@ body {
 
 /* Background color under hero section */
 .checkout-container {
-    background-color: #E4DDBB; /* Updated background color */
+    background-color: white; /* Updated background color */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -23,7 +23,7 @@ body {
 }
 
 .cart-summary {
-    background-color: white !important;
+    background-color: rgb(236, 246, 206) !important;
     color: black !important;
     padding: 20px;
     border-radius: 10px;
@@ -100,15 +100,15 @@ body {
 }
 
 .payment-box label {
-    color: black; /* Orange */
+    color: white; /* Orange */
     font-size: 18px;
     font-weight: bold;
 }
 
-/* Change input text color to orange */
+
 .payment-box input {
-    color: black; /* Orange */
-    border: 1px solid #f1d36f; /* Optional: Add orange border */
+    color: white; /* Orange */
+    border: 1px solid #f1d36f; 
     font-size: 16px;
     padding: 12px;
     border-radius: 8px;
@@ -133,7 +133,7 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px; /* Moved up by reducing margin */
+    margin-top: 10px; 
     transition: background-color 0.3s;
 }
 
@@ -147,8 +147,8 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-    width: 400px; /* Adjust width here */
-    min-height: 350px; /* Adjust height here */
+    width: 400px; 
+    min-height: 350px; 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -156,11 +156,11 @@ body {
 
 /* Adjust size for MM/YY, CVV, First Name, Last Name */
 .flex-row div {
-    width: 48%; /* Make them half-width and ensure they fit in one row */
+    width: 48%; 
 }
 
 .flex-row input {
-    width: 100%; /* Make sure input fits inside the box */
+    width: 100%; 
 }
 
 .checkout-buttons {
@@ -168,13 +168,13 @@ body {
     justify-content: space-between;
     gap: 10px;
     width: 100%;
-    margin-top: 30px; /* Keep this */
-    align-items: center; /* Ensures both buttons align properly */
-    position: relative; /* Needed for precise adjustments */
+    margin-top: 30px; 
+    align-items: center; 
+    position: relative; 
 }
 
 .checkout-buttons .pay-button {
-    margin-top: 0px; /* Moves only the payment button up */
+    margin-top: 0px; 
 }
 
 .checkout-buttons .cancel-button,
@@ -185,16 +185,16 @@ body {
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
-    background-color: transparent; /* Transparent background */
+    background-color: transparent; 
     color: white; 
     text-align: center;
     display: flex;
-    align-items: center; /* Aligns text and arrows properly */
+    align-items: center; 
     justify-content: center;
-    height: 45px; /* Ensures both buttons have the same height */
+    height: 45px; 
     font-weight: bold;
     gap: 5px;
-    white-space: nowrap; /* Prevents wrapping */
+    white-space: nowrap; 
 }
 
 
